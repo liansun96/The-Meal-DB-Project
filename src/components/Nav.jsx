@@ -14,7 +14,7 @@ const Nav = () => {
           <Link to="/">
             <div className="flex items-center gap-4 my-8">
               <img src={foodieLogo} className="w-20" alt="" />
-              <h1 className="font-semibold text-4xl ">Foodie</h1>
+              <h1 className="font-semibold tracking-wide text-4xl ">Meals O'clock</h1>
             </div>
           </Link>
         </div>

@@ -4,10 +4,9 @@ import axios from "axios";
 import { ImYoutube2 } from "react-icons/im";
 import Loader from "../loader/Loader";
 import { v4 as uuidv4 } from "uuid";
-import { MdOutlineBookmarks } from "react-icons/md";
-import { useStateContext } from "../context/StateContext";
+import { MdBookmarkAdd, MdBookmarkAdded } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import {Add} from '../store/reducer/BookmarkSlicer'
+import { Add, Remove } from "../store/reducer/BookmarkSlicer";
 
 const Detail = () => {
   const { id } = useParams();
@@ -48,33 +47,19 @@ const Detail = () => {
     }
   }, [id]);
 
-  // const handleSaveButtonClick = async () => {
-  //   const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
-  //   if (!isSaved) {
-  //     savedMeals.push(meal.idMeal);
-  //     localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
-  //     setIsSaved(true);
-  //   } else {
-  //     savedMeals.splice(savedMeals.indexOf(meal.idMeal), 1);
-  //     localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
-  //     setIsSaved(false);
-  //   }
-  //   isSaved
- //     // ? dispatch({
-  //         type: "REMOVE_FROM_BOOKMARK",
-  //         payload: meal,
-  //       })
-  //     : dispatch({
-  //         type: "ADD_TO_BOOKMARK",
-  //         payload: meal,
-  //       });
-  // };
-
-  const saveBookmark = () => {
-    dispatch(Add(meal))
-  }
-
-  
+  const handleSaveButtonClick = async (id) => {
+    const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
+    if (!isSaved) {
+      savedMeals.push(meal.idMeal);
+      localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
+      setIsSaved(true);
+    } else {
+      savedMeals.splice(savedMeals.indexOf(meal.idMeal), 1);
+      localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
+      setIsSaved(false);
+    }
+    isSaved ? dispatch(Remove({idMeal:id})) : dispatch(Add(meal));
+  };
 
   const createIngredientsArray = (meal) => {
     const ingredientsData = [];
@@ -109,9 +94,23 @@ const Detail = () => {
               />
             </button> */}
             {
-              <button className="bg-primary py-4 px-3 bg-opacity-90 text-xl rounded cursor-pointer duration-500 absolute top-8 right-24" onClick={saveBookmark}>
+              <button
+                className="bg-primary py-2 px-1 bg-opacity-90 text-xl rounded cursor-pointer duration-500 absolute top-8 right-24"
+                onClick={ 
+                  isSaved
+                  ? handleSaveButtonClick.bind(null,meal.id)
+                  : handleSaveButtonClick}
+                title={isSaved ? "Remove From Bookmarks" : "Add To Bookmarks"}
+                aria-label={
+                  isSaved ? "Remove From Bookmarks" : "Add To Bookmarks"
+                }
+              >
                 {/* {bookmark.false ? "Remove" : "Add"} */}
-                {isSaved ? "Remove" : "Add"}
+                {isSaved ? (
+                  <MdBookmarkAdded className="text-4xl" />
+                ) : (
+                  <MdBookmarkAdd className="text-4xl" />
+                )}
               </button>
             }
           </div>

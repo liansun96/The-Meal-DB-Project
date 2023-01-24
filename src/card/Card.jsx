@@ -3,38 +3,11 @@ import { GoLink } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { MdOutlineBookmarks } from "react-icons/md";
 import "./card.css";
-import { useState } from "react";
-import { useContext } from "react";
-import { BookmarkContext } from "../context/BookmarkContext";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-import 'react-lazy-load-image-component/src/effects/opacity.css';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const Card = ({ meal }) => {
-  const [bookmarked, setBookmarked] = useState(false);
-
-  let { bookmarks } = useContext(BookmarkContext);
-
-  const persistBookmarks = () => {
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  };
-
-  const addBookmark = (recipe) => {
-    // Add bookmark
-
-    // check if recipe is bookmarked before adding to bookmarks
-
-    bookmarks.push(recipe);
-
-    // Mark current recipe as bookmark
-    setBookmarked(true);
-    // if (data && recipe.idMeal === data.meals[0].idMeal) {
-    //   data.meals[0].bookmarked = true;
-    // }
-
-    persistBookmarks();
-  };
-
   return (
     <div className="group font-Ubt">
       <div className="card-group p-[10px] relative bg-transparent flex flex-col items- justify-between rounded-2xl group-hover:shadow-xl duration-300">
@@ -46,8 +19,7 @@ const Card = ({ meal }) => {
               className="rounded-xl mx-auto shadow duration-500 scale-[99%]"
               alt=""
             />
-            <button
-              onClick={() => addBookmark(meal)}
+            <button            
               className="bg-primary p-2 bg-opacity-80 rounded scale-0 cursor-pointer duration-500 group-hover:scale-100 absolute top-5 right-5"
             >
               <MdOutlineBookmarks

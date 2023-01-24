@@ -4,12 +4,18 @@ import axios from "axios";
 import { ImYoutube2 } from "react-icons/im";
 import Loader from "../loader/Loader";
 import { v4 as uuidv4 } from "uuid";
+import { MdBookmarkAdd, MdBookmarkAdded } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { Add, Remove } from "../store/reducer/BookmarkSlicer";
 
 const RandomMeal = () => {
   const { id } = useParams();
   const [meal, setMeal] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [ingredients, setIngredients] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
+
+  const dispatch = useDispatch();
 
   const getMealsDetails = async () => {
     const { data } = await axios.get(
@@ -27,6 +33,33 @@ const RandomMeal = () => {
   useEffect(() => {
     getMealsDetails();
   }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("savedMeals")) {
+      const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
+      if (savedMeals.includes(id)) {
+        setIsSaved(true);
+      } else {
+        setIsSaved(false);
+      }
+    } else {
+      localStorage.setItem("savedMeals", JSON.stringify([]));
+    }
+  }, [id]);
+
+  const handleSaveButtonClick = async () => {
+    const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
+    if (!isSaved) {
+      savedMeals.push(meal.idMeal);
+      localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
+      setIsSaved(true);
+    } else {
+      savedMeals.splice(savedMeals.indexOf(meal.idMeal), 1);
+      localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
+      setIsSaved(false);
+    }
+    isSaved ? dispatch(Remove(meal)) : dispatch(Add(meal));
+  };
 
   const createIngredientsArray = (meal) => {
     const ingredientsData = [];
@@ -49,12 +82,29 @@ const RandomMeal = () => {
         <Loader />
       ) : (
         <div className="flex font-Ubt">
-          <div className="w-[50%]xxx">
+          <div className="w-[50%] relative">
             <img
               src={meal.strMealThumb}
               className="w-[90%] rounded-lg"
               alt=""
             />
+            {
+              <button
+                className="bg-primary py-2 px-1 bg-opacity-90 text-xl rounded cursor-pointer duration-500 absolute top-8 right-24"
+                onClick={handleSaveButtonClick}
+                title={isSaved ? "Remove From Bookmarks" : "Add To Bookmarks"}
+                aria-label={
+                  isSaved ? "Remove From Bookmarks" : "Add To Bookmarks"
+                }
+              >
+                {/* {bookmark.false ? "Remove" : "Add"} */}
+                {isSaved ? (
+                  <MdBookmarkAdded className="text-4xl" />
+                ) : (
+                  <MdBookmarkAdd className="text-4xl" />
+                )}
+              </button>
+            }
           </div>
           <div className="w-[50%] space-y-4">
             <div className="flex justify-start items-center gap-5">
