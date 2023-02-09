@@ -1,44 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-   BookmarkItem : []
-};
-
+// create a slice for managing the bookmark state
 const bookmarkSlicer = createSlice({
   name: "Bookmark",
-  initialState : [],
+  initialState : [], // initialize the state as an empty array
   reducers: {
+    // add an item to the state
     Add: (state, action) => {
+      // return a new array with the item added to the state
       return [...state, action.payload];
-    },
-    // Add: (state, { payload }) => {
-    //   const inBookmark= state.find((item) => item.id === payload.id);
-    
-    //       if (inBookmark) {
-    //         return [...state , payload];
-    //       } else {
-    //         return [...state, payload];            
-    //       }
-    // },
-
+    }, 
+        
     Remove: (state, action) => {
-      return state.filter((i) => i.id !== action.payload.id);
-    },
-
-    // Remove: (state, action) => {
-    //   const itemId = action.payload;
-    //   state.BookmarkItem = state.BookmarkItem.filter((item) => item.id !== itemId);
-    // },
-
-    Edit: (state, action) => {
-      return state.map((i) =>
-        i.id === action.payload.id
-          ? { id: i.id, name: action.payload.name, phone: action.payload.phone }
-          : i
-      );
-    },
+      const index = state.findIndex(item => item.id === action.payload);
+      console.log(index);
+      state.splice(index, 1);
+    }
   },
 });
 
-export const { Add, Remove, Edit } = bookmarkSlicer.actions;
+
+// export the actions for adding and removing items
+export const { Add, Remove } = bookmarkSlicer.actions;
+// export the reducer for the bookmark state
 export default bookmarkSlicer.reducer;
+

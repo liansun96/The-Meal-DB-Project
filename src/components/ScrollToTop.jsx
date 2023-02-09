@@ -8,7 +8,7 @@ const ScrollToTop = () => {
     }
 
   return (
-    <button onClick={scrollTop} className='fixed bottom-8 right-8'>
+    <button onClick={scrollTop} className='fixed bottom-3 right-3 lg:bottom-8 lg:right-8'>
         <BsFillArrowUpSquareFill className='text-3xl text-light duration-200 hover:text-success'/>
     </button>
   )

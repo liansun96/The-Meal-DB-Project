@@ -46,14 +46,31 @@ const Home = () => {
         <Loader />
       ) : (
         <>
-          <div className="my-5 flex items-center">
-            <div className="w-[20%] flex items-center space-x-4">
-              <h4 className="text-2xl font-normal tracking-tight"><i>Meals Categories</i></h4>
-              <TbSignRight className="text-5xl text-success" />
+          <div className=" lg:flex my-5 items-center">
+            <div className="lg:w-[20%] flex items-center space-x-4">
+              <h4 className="text-xl lg:text-2xl font-normal tracking-tight mx-auto"><i>Meals Categories</i></h4>
+              <TbSignRight className="text-5xl text-success hidden lg:block" />
             </div>
-            <div className="w-[80%] mx-auto">
+            <div className="lg:w-[80%] mx-auto">
               <Swiper
-                slidesPerView={6}
+                slidesPerView={2.55}
+                breakpoints={{
+                  // when window width is >= 640px
+                  560: {
+                    width: 560,
+                    slidesPerView: 2.55,
+                    spaceBetween: 50,
+                  },
+                  // when window width is >= 768px
+                  768: {
+                    width: 768,
+                    slidesPerView: 4,
+                  },
+                  1024: {
+                    slidesPerView: 6,
+                    spaceBetween: 50,
+                  },
+                }}
                 spaceBetween={5}
                 loop={true}
                 mousewheel={true}
@@ -85,7 +102,7 @@ const Home = () => {
               </Swiper>
             </div>
           </div>
-          <div className="flex flex-wrap gap-11 mb-6">
+          <div className="flex flex-wrap justify-center gap-16 lg:gap-11 lg:mb-6">
             {meals?.map((meal) => (
               <Card key={meal.idMeal} meal={meal} />
             ))}

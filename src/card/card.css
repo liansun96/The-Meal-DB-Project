@@ -41,3 +41,9 @@
     height: 100%;
     background: linear-gradient(to right, rgb(161, 72, 134), rgb(99, 107, 122), rgb(58, 142, 139));
 }
+
+@media screen and (max-width:576px) {
+    .card-group{
+        transform: scale(1.1);
+    }
+}

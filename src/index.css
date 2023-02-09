@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components{
+    .menu {
+        @apply absolute w-[200px] h-[230px] left-[-172px] top-[50px] bg-primary bg-opacity-95 shadow duration-300 origin-top rounded-lg
+    }
+
+    .active{
+        @apply text-light bg-success px-4 py-2 rounded-lg ;
+    }
+}
 
 *{
     scroll-behavior: smooth;

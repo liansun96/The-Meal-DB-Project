@@ -29,10 +29,10 @@ const SearchByName = () => {
 
   return (
     <div>
-      <div className="flex justify-center mb-8">
+      <div className="flex justify-center my-9 lg:mb-8">
         <input
           type="text"
-          className="text-black text-2xl font-Ubt px-3 w-96 h-12 rounded outline-none placeholder:text-xl placeholder:font-Ubt focus:outline-2 focus:outline-success"
+          className="text-black text-2xl font-Ubt px-3 w-80 lg:w-96 h-12 rounded outline-none placeholder:text-xl placeholder:font-Ubt focus:outline-2 focus:outline-success"
           placeholder="&#128269;   Search Meals By Name"
           onChange={handleChange}
           defaultValue={searchName}
@@ -43,7 +43,7 @@ const SearchByName = () => {
         <Loader />
       ) : (
         <>
-          <div className="flex flex-wrap gap-11 mb-6">
+          <div className="flex flex-wrap justify-center gap-16 lg:gap-11 lg:mb-6">
             {meals?.map((meal) => (
               <Card key={meal.idMeal} meal={meal} />
             ))}

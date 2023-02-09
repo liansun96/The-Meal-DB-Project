@@ -19,13 +19,15 @@ const Card = ({ meal }) => {
               className="rounded-xl mx-auto shadow duration-500 scale-[99%]"
               alt=""
             />
-            <button            
-              className="bg-primary p-2 bg-opacity-80 rounded scale-0 cursor-pointer duration-500 group-hover:scale-100 absolute top-5 right-5"
-            >
-              <MdOutlineBookmarks
-                className={`bookmarked === ture ? "text-primary bg-success" : "text-light bg-primary"`}
-              />
-            </button>
+            <Link to={`/detail/${meal.idMeal}`}>
+              <button            
+                className="bg-primary p-2 bg-opacity-80 rounded scale-0 cursor-pointer duration-500 group-hover:scale-100 absolute top-5 right-5"
+              >
+                <MdOutlineBookmarks
+                  className="text-light"
+                />
+              </button>
+            </Link>
           </div>
           <h3 className="text-xl -tracking-normal font-medium mt-2">
             {meal.strMeal.length > 22

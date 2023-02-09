@@ -12,7 +12,7 @@ import Bookmarks from "./pages/Bookmarks";
 
 const App = () => {
   return (
-    <div className="w-[1200px] mx-auto relative">
+    <div className="w-[98%] lg:w-[1200px] mx-auto relative">
       <Nav />
       <ScrollToTop />
       <Routes>

@@ -47,19 +47,44 @@ const Detail = () => {
     }
   }, [id]);
 
-  const handleSaveButtonClick = async (id) => {
+   const handleSaveButtonClick = (idMeal) => {
     const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
     if (!isSaved) {
       savedMeals.push(meal.idMeal);
       localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
       setIsSaved(true);
+      dispatch(Add(meal));
     } else {
-      savedMeals.splice(savedMeals.indexOf(meal.idMeal), 1);
+      savedMeals.splice(savedMeals.indexOf(idMeal), 1);
       localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
       setIsSaved(false);
+      dispatch(Remove(idMeal));
     }
-    isSaved ? dispatch(Remove({idMeal:id})) : dispatch(Add(meal));
   };
+
+  // const handleSaveButtonClick = (idMeal) => {
+  //   const savedMeals = JSON.parse(localStorage.getItem("savedMeals"));
+  //   if (!isSaved) {
+  //     savedMeals.push(meal.idMeal);
+  //     localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
+  //     setIsSaved(true);
+  //   } else {
+  //     savedMeals.splice(savedMeals.indexOf(meal.idMeal), 1);
+  //     localStorage.setItem("savedMeals", JSON.stringify(savedMeals));
+  //     setIsSaved(false);
+  //   }
+  //   isSaved ? dispatch(Remove(idMeal)) : dispatch(Add(meal));
+  // };
+
+  // const addToBookmark = () =>{
+  //   dispatch(Add(meal))
+  //   console.log('add')
+  // }
+
+  // const removeFromBookmark = (idMeal) =>{
+  //   dispatch(Remove(idMeal))
+  //   console.log('delete')
+  // }
 
   const createIngredientsArray = (meal) => {
     const ingredientsData = [];
@@ -81,24 +106,19 @@ const Detail = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="flex font-Ubt">
-          <div className="w-[50%] relative">
+        <div className="lg:flex font-Ubt">
+          <div className="w-[95%] mb-10 lg:w-[50%] relative">
             <img
               src={meal.strMealThumb}
-              className="w-[90%] rounded-lg"
+              className="w-[95%] mx-auto ml-[20px] md:ml-[40px] lg:ml-0 lg:w-[90%] rounded-lg"
               alt=""
             />
-            {/* <button className="bg-primary py-4 px-3 bg-opacity-90 text-xl rounded cursor-pointer duration-500 absolute top-8 right-24">
-              <MdOutlineBookmarks
-                className={bookmarked == "ture" ? "text-primary bg-success" : "text-light bg-primary"}
-              />
-            </button> */}
             {
               <button
-                className="bg-primary py-2 px-1 bg-opacity-90 text-xl rounded cursor-pointer duration-500 absolute top-8 right-24"
+                className="bg-primary py-2 px-1 bg-opacity-90 text-xl rounded cursor-pointer duration-500 absolute top-8 right-8 lg:top-8 lg:right-24"
                 onClick={ 
                   isSaved
-                  ? handleSaveButtonClick.bind(null,meal.id)
+                  ? ()=> handleSaveButtonClick(meal.idMeal)
                   : handleSaveButtonClick}
                 title={isSaved ? "Remove From Bookmarks" : "Add To Bookmarks"}
                 aria-label={
@@ -114,7 +134,7 @@ const Detail = () => {
               </button>
             }
           </div>
-          <div className="w-[50%] space-y-4">
+          <div className="w-[95%] mx-auto lg:w-[50%] space-y-4">
             <div className="flex justify-start items-center gap-5">
               <h3 className="text-2xl font-bold">{meal.strMeal}</h3>
               <div className="bg-light text-primary w-24 h-7 rounded flex justify-center items-center">
@@ -152,6 +172,7 @@ const Detail = () => {
               <a
                 href={meal.strYoutube}
                 className="flex justify-start items-center gap-8"
+                target="_blank"
               >
                 <h6 className="text-base font-medium duration-500  group-hover:text-red-600">
                   Watch on Youtube
